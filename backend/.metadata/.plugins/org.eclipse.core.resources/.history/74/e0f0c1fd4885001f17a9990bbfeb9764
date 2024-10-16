@@ -1,0 +1,34 @@
+package com.housing.dto;
+
+import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
+
+public class ProfessionalDTO {
+	
+	private Long id;
+
+	@NotNull(message = "{professional.serviceType.absent}")
+	@Size(max = 50, message = "{professional.serviceType.invalid}")
+	private String serviceType;
+
+	@NotNull(message = "{professional.experience.absent}")
+	@PositiveOrZero(message = "{professional.experience.invalid}")
+	private Integer experience = 0;
+
+	@NotNull(message = "{professional.description.absent}")
+	@Size(max = 150, message = "{professional.description.invalid}")
+	private String description;
+
+	@NotNull(message = "{professional.joiningDate.absent}")
+	@PastOrPresent(message = "{professional.joiningDate.invalid}")
+	private LocalDate joiningDate = LocalDate.now();
+
+	@NotNull(message = "{professional.availability.absent}")
+	private Boolean availability = Boolean.TRUE;
+		
+	private UserDTO userDTO;
+	
+}

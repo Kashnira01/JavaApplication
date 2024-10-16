@@ -1,0 +1,5 @@
+package com.housing.service;
+
+public interface UserService {
+
+}

@@ -1,0 +1,40 @@
+package com.housing.utility;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+import com.housing.exception.HousingException;
+
+@Component
+@Aspect
+public class LoggingAspect {
+
+	public static final Logger LOGGER = LogManager.getLogger(LoggingAspect.class);
+
+	@Before("execution(* com.housing.service.*Impl.*(..))")
+	public void before() throws HousingException {
+		LOGGER.info("Before advice called.");
+	}
+
+	@After("execution(* com.housing.service.*Impl.*(..))")
+	public void after() throws HousingException {
+		LOGGER.info("After advice called.");
+	}
+
+	@AfterReturning("execution(* com.housing.service.*Impl.*(..))")
+	public void afterReturning() throws HousingException {
+		LOGGER.info("After returning advice called.");
+	}
+
+	@AfterThrowing(pointcut = "execution(* com.housing.service.*Impl.*(..))", throwing = "exception")
+	public void afterThrowing(HousingException exception) throws HousingException {
+		LOGGER.error(exception.getMessage(), exception);
+	}
+
+}

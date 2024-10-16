@@ -1,0 +1,61 @@
+package com.housing.dto;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import com.housing.utility.UserStatus;
+import com.housing.utility.UserType;
+
+public class UserDTO {
+	
+	private Long id;
+
+	@NotNull(message = "{user.userType.absent}")
+	@Size(max = 15, message = "{user.userType.invalid}")
+	private UserType userType = UserType.USER;
+
+	@NotNull(message = "{user.visitedToday.absent}")
+	private Boolean visitedToday;
+
+	@NotNull(message = "{user.flagged.absent}")
+	private Boolean flagged;
+
+	@NotNull(message = "{user.status.absent}")
+	@Size(max = 15, message = "{user.status.invalid}")
+	private UserStatus status = UserStatus.PENDING;
+
+	@NotNull(message = "{user.firstName.absent}")
+	@Size(max = 50, message = "{user.firstName.invalid}")
+	private String firstName;
+
+	@Size(max = 50, message = "{user.lastName.invalid}")
+	private String lastName;
+
+	@NotNull(message = "user.email.absent")
+	@Size(max = 150, message = "user.email.invalid")
+	@Email(message = "user.email.invalid")
+	private String email;
+
+	@NotNull(message = "{user.username.absent}")
+	@Size(max = 50, message = "{user.username.invalid}")
+	private String username;
+
+	@NotBlank(message = "{user.password.absent}")
+	@Size(min = 6, max = 1500, message = "{user.password.invalid}")
+	private String password;
+
+	@NotNull(message = "{user.address.absent}")
+	@Size(max = 300, message = "{user.address.invalid}")
+	private String address;
+
+	@NotNull(message = "{user.pincode.absent}")
+	@Min(value = 100000, message = "{user.pincode.invalid}")
+	@Max(value = 999999, message = "{user.pincode.invalid}")
+	private Integer pincode;
+	
+	
+	
+}

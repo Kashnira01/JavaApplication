@@ -1,0 +1,78 @@
+package com.housing.resource;
+
+import java.util.List;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.housing.dto.UserDTO;
+import com.housing.exception.HousingException;
+import com.housing.service.UserService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/housing")
+public class UserResource {
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private Environment environment;
+
+	@PostMapping(value = "/register/user")
+	public ResponseEntity<String> registerUser(@Valid @RequestBody UserDTO userDTO) throws HousingException {
+		try {
+			Long newUserId = userService.addUser(userDTO);
+			String successMessage = environment.getProperty("USER.CREATE.SUCCESS") + newUserId.toString();
+			return new ResponseEntity<>(successMessage, HttpStatus.CREATED);
+		} catch (HousingException e) {
+			return new ResponseEntity<>("HousingExeption occured " + e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (DataIntegrityViolationException e) {
+			return new ResponseEntity<>("DataIntegrityViolationException occured " + e.getMessage(), HttpStatus.CONFLICT);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>("Something went wrong " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping(value = "/user/{userId}")
+	public ResponseEntity<UserDTO> currentUser(@PathVariable Long userId) throws HousingException {
+		try {
+			UserDTO currentUserDTO = userService.getUser(userId);
+			return new ResponseEntity<UserDTO>(currentUserDTO, HttpStatus.OK);
+		} catch (HousingException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HousingException occured " + e.getMessage(), e);
+		} catch (Exception e) {
+			System.out.println(e);
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+					"Something went worng " + e.getMessage(), e);
+		}
+	}
+
+	@GetMapping(value = "/users")
+	public ResponseEntity<List<UserDTO>> retrieveAllUsers() throws HousingException {
+		try {
+			List<UserDTO> allUserDTOs = userService.getAllUsers();
+			return new ResponseEntity<List<UserDTO>>(allUserDTOs, HttpStatus.OK);
+		} catch (HousingException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HousingException occured " + e.getMessage(), e);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+					"Something went worng " + e.getMessage(), e);
+		}
+	}
+
+}

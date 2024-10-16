@@ -1,0 +1,5 @@
+package com.housing.entity;
+
+public class Rating {
+
+}

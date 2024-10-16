@@ -1,0 +1,5 @@
+package com.housing.resource;
+
+public class UserResource {
+
+}

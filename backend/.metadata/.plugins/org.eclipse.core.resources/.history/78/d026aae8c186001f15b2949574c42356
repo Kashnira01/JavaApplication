@@ -1,0 +1,5 @@
+package com.housing.utility;
+
+public class ErrorInfo {
+
+}

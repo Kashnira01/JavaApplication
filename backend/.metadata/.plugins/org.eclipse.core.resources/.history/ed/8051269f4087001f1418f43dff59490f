@@ -1,0 +1,28 @@
+package com.housing.service;
+
+import java.util.List;
+
+import com.housing.dto.ProfessionalDTO;
+import com.housing.exception.HousingException;
+
+public class ProfessionalServiceImpl implements ProfessionalService{
+
+	@Override
+	public Integer addProfessional(ProfessionalDTO professionalDTO) throws HousingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProfessionalDTO getProfessional(Integer professionalId) throws HousingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProfessionalDTO> getAllProfessionals() throws HousingException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

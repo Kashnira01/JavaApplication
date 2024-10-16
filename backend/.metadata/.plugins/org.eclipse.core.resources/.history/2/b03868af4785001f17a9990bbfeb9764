@@ -1,0 +1,33 @@
+package com.housing.dto;
+
+import java.time.LocalDate;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
+import com.housing.utility.ServiceRequestStatus;
+
+public class ServiceRequestDTO {
+	
+	private Long id;
+
+	private ServiceDTO serviceDTO;
+
+	private UserDTO userDTO;
+
+	private ProfessionalDTO professionalDTO;
+
+	@NotNull(message = "{serviceRequest.requestStatus.absent}")
+	@Size(max = 15, message = "{serviceRequest.requestStatus.invalid}")
+	private ServiceRequestStatus requestStatus = ServiceRequestStatus.REQUESTED;
+
+	@FutureOrPresent(message = "{serviceRequest.requestDate.invalid}")
+	private LocalDate requestDate;
+
+	@PastOrPresent(message = "serviceRequest.completionDate.invalid")
+	private LocalDate completionDate;
+
+	@Size(max = 1000, message = "{serviceRequest.feedback.invalid}")
+	private String feedback;
+	
+}

@@ -1,0 +1,5 @@
+package com.housing.dto;
+
+public class RatingDTO {
+
+}

@@ -1,0 +1,20 @@
+package com.housing.dto;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+public class RatingDTO {
+	
+	private Long id;
+	
+	@NotNull(message = "{rating.rating.absent}")
+	@Min(value = 0, message = "{rating.rating.invalid}")
+	@Max(value = 10, message = "{rating.rating.invalid}")
+	private Integer rating;
+	
+	private ProfessionalDTO professionalDTO;
+	
+	private UserDTO userDTO;
+	
+}
